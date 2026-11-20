@@ -1,0 +1,41 @@
+-- Banco de dados do jogo de RPG online
+
+CREATE DATABASE RPG_Online;
+GO
+
+USE RPG_Online;
+GO
+
+CREATE TABLE USUARIOS (
+    UsuarioId INT IDENTITY(1,1) PRIMARY KEY,
+    Email VARCHAR(100) NOT NULL,
+    Senha VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE CLASSES (
+    ClasseId INT IDENTITY(1,1) PRIMARY KEY,
+    Nome VARCHAR(50) NOT NULL,
+    Descricao VARCHAR(200)
+);
+
+CREATE TABLE HABILIDADES (
+    HabilidadeId INT IDENTITY(1,1) PRIMARY KEY,
+    Nome VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE PERSONAGENS (
+    PersonagemId INT IDENTITY(1,1) PRIMARY KEY,
+    NomePersonagem VARCHAR(50) NOT NULL,
+    UsuarioId INT NOT NULL,
+    ClasseId INT NOT NULL,
+    FOREIGN KEY (UsuarioId) REFERENCES USUARIOS(UsuarioId),
+    FOREIGN KEY (ClasseId) REFERENCES CLASSES(ClasseId)
+);
+
+CREATE TABLE CLASSES_HABILIDADES (
+    ClasseId INT NOT NULL,
+    HabilidadeId INT NOT NULL,
+    PRIMARY KEY (ClasseId, HabilidadeId),
+    FOREIGN KEY (ClasseId) REFERENCES CLASSES(ClasseId),
+    FOREIGN KEY (HabilidadeId) REFERENCES HABILIDADES(HabilidadeId)
+);
